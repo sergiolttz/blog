@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User 
 
+from django.urls import reverse
+
 class Post(models.Model):
     STATUS_CHOICES = (
         ('borrador', 'Borrador'),
@@ -22,4 +24,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+    def obtener_url_absoluto(self):
+        return reverse('blog:detalles', args=[self.titulo, self.tema])
     

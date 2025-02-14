@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: black;
+}
+
+h1{
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 50px;
+    font-weight: 600;
+    color: green;
+}
+
+h2{
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+    color: green;
+}
+
+p{
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+}
