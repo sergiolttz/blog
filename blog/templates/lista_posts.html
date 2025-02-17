@@ -22,14 +22,14 @@
     {% endfor %}
     <div id="paginacion">
         <span>
-            {% if publicaciones.has_previous %}
-                <a href="?pagina={{publicaciones.previous_page_number}}">Página Anterior</a>
+            {% if page_obj.has_previous %}
+                <a href="?page={{page_obj.previous_page_number}}">Página Anterior</a>
             {% endif %}
             <span>
                 Página: {{publicaciones.number}} / {{publicaciones.paginator.num_pages}}
             </span>
-            {% if publicaciones.has_next %}
-            <a href="?pagina={{publicaciones.next_page_number}}">Siguiente</a>
+            {% if page_obj.has_next %}
+            <a href="?page={{page_obj.next_page_number}}">Siguiente</a>
             {% endif %}
         </span>
     </div>
