@@ -20,5 +20,18 @@
             Publicado el {{ post.publicado }}, por {{post.autor}}
         </p>
     {% endfor %}
+    <div id="paginacion">
+        <span>
+            {% if publicaciones.has_previous %}
+                <a href="?pagina={{publicaciones.previous_page_number}}">Página Anterior</a>
+            {% endif %}
+            <span>
+                Página: {{publicaciones.number}} / {{publicaciones.paginator.num_pages}}
+            </span>
+            {% if publicaciones.has_next %}
+            <a href="?pagina={{publicaciones.next_page_number}}">Siguiente</a>
+            {% endif %}
+        </span>
+    </div>
 </body>
 </html>
