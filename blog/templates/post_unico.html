@@ -17,5 +17,37 @@
     <h2>
         {{publicacion.cuerpo}}
     </h2>
+
+    {% with comentarios.count as total %}
+    <h2>
+        {{total}} Comentario{{total|pluralize}}
+    </h2>
+    {% endwith %}
+
+    {% for comentario in comentarios %}
+    <div>
+        <p>
+            Comentario #{{forloop.counter}} autor: {{comentario.nombre}}
+            {{comentario.creado}}
+        </p>
+        {{comentario.cuerpo|linebreaks}}
+    </div>
+    {% empty %}
+        <p>
+            Aún no hay comentarios
+        </p>
+    {% endfor %}
+
+    <h2>Añadir un comentario</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ comentario_form.as_p }} <p>
+            <input type="submit" value="Añadir comentario">
+        </p>
+    </form>
+    
+    
+    {% if nuevo_comentario %} <p>Tu comentario ha sido añadido.</p> {% endif %}
+    
 </body>
 </html>
