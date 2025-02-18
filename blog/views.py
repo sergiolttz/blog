@@ -2,30 +2,36 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Post, Comentario
 from django.views.generic import ListView
 from .forms import Formulario_Envio_de_Correo, ComentarioFormulario
-'''from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger'''
-
-class Lista_de_publicaciones(ListView):
-    model= Post
-    context_object_name = "publicaciones"
-    paginate_by = 2
-    template_name = "lista_posts.html"
+from taggit.models import Tag
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-'''
-def Lista_de_publicaciones(request):
-    paginacion = Paginator(Post.objects.all(), 2)
+from django.shortcuts import render, get_list_or_404, get_object_or_404
+from .models import Post, Comentario
+from django.views.generic import ListView
+from .forms import Formulario_Envio_de_Correo, ComentarioFormulario
+from taggit.models import Tag
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+def Lista_de_publicaciones(request, tag_slug=None):
+    tag = None
+    object_list = Post.objects.all()  # Inicializa object_list con todos los posts
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])  # Filtra solo si hay un tag
+
+    paginacion = Paginator(object_list, 2)  # La paginación va después de la consulta
     pagina = request.GET.get('pagina')
 
     try:
         publicaciones = paginacion.page(pagina)
     except PageNotAnInteger:
-        publicaciones = paginacion.page(1) 
+        publicaciones = paginacion.page(1)
     except EmptyPage:
         publicaciones = paginacion.page(paginacion.num_pages)
-    return render(request, 'lista_posts.html', {'publicaciones': publicaciones})
 
-    
-'''
+    return render(request, 'lista_posts.html', {'publicaciones': publicaciones, 'tag': tag})
 
 
 def Detalle_publicacion(request, titulo_arg, tema_arg):

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 from django.urls import reverse
 
@@ -28,6 +29,8 @@ class Post(models.Model):
     def obtener_url_absoluto(self):
         return reverse('blog:detalles', args=[self.titulo, self.tema])
     
+    tags = TaggableManager()
+    
 class Comentario(models.Model):
     publicacion = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
 
@@ -43,3 +46,4 @@ class Comentario(models.Model):
 
     def __str__(self):
         return f'Comentario de {self.nombre} en {self.publicacion}'
+    
