@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "blog",
     #third party apps
     "taggit",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
+    "django.contrib.postgres",
 ]
 
 MIDDLEWARE = [

@@ -8,4 +8,5 @@ urlpatterns = [
     path('tag/<slug:tag_slug>/', Lista_de_publicaciones, name='lista_tags'),
     #path('<int:post_id>/compartir/', compartir_post, name='compartir'),
     path('<str:titulo_arg>/<str:tema_arg>/', Detalle_publicacion, name='detalles'),
+    path('busqueda/', busqueda_publicaciones, name='busqueda'),
 ]

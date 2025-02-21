@@ -11,3 +11,6 @@ class ComentarioFormulario(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ('nombre', 'correo', 'cuerpo')
+
+class SearchForm(forms.Form):
+    consulta = forms.CharField(max_length=100)

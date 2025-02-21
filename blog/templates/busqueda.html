@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Busqueda</title>
+</head>
+{% if consulta %}
+    <h1>Publicaciones que contienen <span class="consulta">{{ consulta }}</span></h1>
+    <hr>
+    <h3>
+    {% with resultados.count as total %}
+        Se encontraron <span class="consulta">{{ total }} resultado{{ total|pluralize }}</span>
+    {% endwith %}
+    </h3>
+    <br>
+    {% for post in resultados %}
+        <h4>
+            <a href="{{ post.get_absolute_url }}"> {{ post.titulo }}</a>
+        </h4>
+        <br>
+    {% empty %}
+        <p> No hay resultados para su consulta.</p>
+    {% endfor %}
+{% else %}
+        <h1>My blog | Busqueda de publicaciones</h1>
+        <hr>
+        <form method="get">
+            {{ form.as_p }}
+            <input type="submit" value="Buscar">
+        </form>
+{% endif %}
+<body>
+    
+</body>
+
+</html>

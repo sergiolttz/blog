@@ -9,7 +9,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Post, Comentario
 from django.views.generic import ListView
-from .forms import Formulario_Envio_de_Correo, ComentarioFormulario
+from django.contrib.postgres.search import SearchVector, TrigramSimilarity
+from .forms import Formulario_Envio_de_Correo, ComentarioFormulario, SearchForm
 from taggit.models import Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -74,3 +75,14 @@ def Compartir_Post(request, post_id):
 
         return render(request, 'compartir_post.html', {'publicacion': publicacion, 'form': formulario})
     
+def busqueda_publicaciones(request):
+    form = SearchForm()
+    consulta = None
+    resultados = []
+
+    if 'consulta' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            consulta = form.cleaned_data['consulta']
+            resultados = Post.objects.annotate(similarity=TrigramSimilarity('titulo', consulta),).filter(similarity__gt=0.1).order_by('-similarity')
+    return render(request, 'busqueda.html', {'form': form, 'consulta': consulta, 'resultados': resultados})
